@@ -24,20 +24,21 @@ import {
         focused: !this.state.focused,
         fontWeight: 100,
       }, ()=>{
-        console.log('placeholder clicked', this.state.focused)
+        //console.log('placeholder clicked', this.state.focused)
       })
     }
-  
-    type(evt){
-      console.log(evt.nativeEvent.inputEvent.type)
+    keyPressed(evt){
+      console.log(evt.nativeEvent.inputEvent.key)
     }
-    keyPressed(){
-
-    }
+    
     render() {
       return (
-        <View>
-          <VrButton onEnter={this.focus.bind(this)} onExit={this.focus.bind(this)} onInput={(evt)=>this.type(evt)}onKeyDown={this.type.bind(this)}>
+        <View onInput={(evt)=>{
+          if(evt.nativeEvent.inputEvent.type == 'KeyboardInputEvent'){
+            this.keyPressed(evt)
+          }
+        }}>
+          <VrButton onEnter={this.focus.bind(this)} onExit={this.focus.bind(this)} >
             <Text 
               style={{
                 margin: 0.05,

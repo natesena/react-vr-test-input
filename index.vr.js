@@ -13,20 +13,11 @@ export default class test_vr extends React.Component {
  
   clickity(){
     console.log('clicked')
-    this.setState({
-      clicked: !this.state.clicked
-    })
   }
-  type(evt){
-    console.log(evt)
-  }
+  
   render() {
     return (
-      <View onInput={(evt)=>{
-        if(evt.nativeEvent.inputEvent.type == 'KeyboardInputEvent'){
-          this.type(evt)
-        }
-      }}>
+      <View >
 
         <Pano source={asset('chess-world.jpg')}/>
         
