@@ -22,13 +22,17 @@ import {
       this.setState({
         color: this.state.focused? '#FF0000': '#00FF00',
         focused: !this.state.focused,
-        fontWeight: 100,
       }, ()=>{
         //console.log('placeholder clicked', this.state.focused)
       })
     }
     keyPressed(evt){
-      console.log(evt.nativeEvent.inputEvent.key)
+      var key = evt.nativeEvent.inputEvent.key
+      this.setState({
+        text: this.state.text + key
+      }, ()=>{
+        console.log(this.state.text)
+      })
     }
     
     render() {
