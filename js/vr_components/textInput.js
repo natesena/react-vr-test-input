@@ -52,28 +52,45 @@ import {
         //console.log('deleted beyond prop', 'backSpaceText', backSpaceText)
         backSpaceText = this.props.placeHolder
       }
-      
-
+    
       //console.log('this.state.text', this.state.text)
       //console.log("this.state.text minus letter", backSpaceText)
-      
+
+      //need to subtract placeholder from 
+      var currentValue
+      var currentText = this.state.text.split('')
+      var placeHolderLength = this.props.placeHolder.length
+      for(let i = 0; i < placeHolderLength; i++){
+        currentText.shift()
+      }
+      currentValue = currentText.join('')
+      console.log('currentValue', currentValue)
+
       //filter by key
       if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){
+        currentValue = currentValue + key
         this.setState({
           text: this.state.changed? this.state.text + key : this.state.text + key,
           changed: true,
-          fontWeight: 400
+          fontWeight: 400,
+          value: currentValue,
         }, ()=>{
-          console.log(this.state.text)
+          //console.log(this.state.text)
+          console.log('value', this.state.value)
         })
       }
       if(theKeyCode == 8){
+        if(currentValue.length){
+          currentValue.pop()
+        }
         //console.log('tried to backspace')
         this.setState({
           text: this.state.changed? backSpaceText : this.state.text,
-          changed: true
+          changed: true,
+          value: currentValue
         }, ()=>{
           //console.log(this.state.text)
+          console.log('value', this.state.value)
         })
       }
       
