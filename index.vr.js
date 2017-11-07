@@ -18,11 +18,11 @@ export default class test_vr extends React.Component {
       confirmPassword: 'confirm password: '
     }
   }
-  clickity(){
-    console.log('clicked')
-  }
-  onNameChange(){
-    console.log('name change!')
+  submit(){
+    console.log('Tried to submit')
+    if(this.state.fields.username !== 'username: ' && this.state.fields.email !== 'email: ' && this.state.fields.password !== 'password: '&&this.state.fields.confirmPassword !== 'confirm password: '){
+      console.log('test passed!')
+    }
   }
 
   onInputChange(field, value) {
@@ -45,7 +45,7 @@ export default class test_vr extends React.Component {
         <TextInput name="email" onChange={this.onInputChange.bind(this)} value={this.state.fields.email} placeHolder={'email: '} focused={false} type={'email'} ></TextInput>
         <TextInput name="password" onChange={this.onInputChange.bind(this)} value={this.state.fields.password} placeHolder={'password: '} focused={false} type={'password'} ></TextInput>
         <TextInput name="confirmPassword" onChange={this.onInputChange.bind(this)} value={this.state.fields.confirmPassword} placeHolder={'confirm password: '} focused={false} type={'password'} ></TextInput>
-        <VrButton onClick={this.clickity.bind(this)}>
+        <VrButton onClick={this.submit.bind(this)}>
           <Text
             style={{
               backgroundColor: '#777879',

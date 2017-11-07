@@ -8,14 +8,12 @@ import {
 
   export default class TextInput extends React.Component {
     //text is what is shown as text
-    //changed is
     constructor(props){
         super(props)
         this.state ={
             text: props.placeHolder,
             color: '#FF0000',
             focused: props.focused,
-            changed: false,
         }
     }
 
@@ -38,16 +36,10 @@ import {
       //actual key that was pressed. Could be non-alphanumeric
       var key = evt.nativeEvent.inputEvent.key
       
-      //------Finding (Current Text - Placeholder) ----------
-      //need to subtract placeholder from 
-      var currentText = this.state.text.split('')
-      //console.log('currenttext-pre', currentText)
-      
       //if key is alphanumeric or @ or .
       if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){  
         this.setState({
-          text: this.state.changed? this.state.text + key : key,
-          changed: true,
+          text: this.state.text == this.props.placeHolder? key: this.state.text + key,
         }, ()=>{
           this.props.onChange(this.props.name, this.state.text)
           //console.log(this.state.text)
@@ -56,18 +48,17 @@ import {
 
       //if delete key was pressed
       if(theKeyCode == 8){
-        var joinedText = currentText.join('')
-        console.log('joinedText', joinedText == this.props.placeHolder)
+        var currentText = this.state.text.split('')
         //delete letter from array
         currentText.pop()
         var joinedLess = currentText.join('')
-        console.log('joinedless', !!joinedLess)
         //if currenttext is empty, show placeholder
         this.setState({
-          text: this.state.changed && joinedLess? joinedLess: this.props.placeHolder,
-          changed: joinedText !== this.props.placeHolder && joinedLess? true: false,
+          //if value would be empty or text == placeholder make it placeholder, otherwise make it popped off
+          text: !joinedLess || this.state.text == this.props.placeHolder? this.props.placeHolder : joinedLess
+
         }, ()=>{
-          console.log('delete-end-state', this.state)
+          //console.log('delete-end-state', this.state)
           this.props.onChange(this.props.name, this.state.text)
         })
       }
