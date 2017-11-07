@@ -7,6 +7,8 @@ import {
   } from 'react-vr';
 
   export default class TextInput extends React.Component {
+    //text is what is shown as text
+    //changed is
     constructor(props){
         super(props)
         this.state ={
@@ -35,59 +37,38 @@ import {
 
       //actual key that was pressed. Could be non-alphanumeric
       var key = evt.nativeEvent.inputEvent.key
-
-      //-----Backspace Handler------
-      //store current text value
-      //if inputfield is not !changed, this is simply the placeholder
-      var copyString = this.state.text
-      var copyArray = copyString.split('')
-      copyArray.pop()
-      var backSpaceText= copyArray.join('')
-      if(backSpaceText.length <= this.props.placeHolder.length){
-        //console.log('deleted beyond prop', 'backSpaceText', backSpaceText)
-        backSpaceText = this.props.placeHolder
-      }
       
-      //------Finding Current Text - placeholder --------------
+      //------Finding (Current Text - Placeholder) ----------
       //need to subtract placeholder from 
-      var currentValue
       var currentText = this.state.text.split('')
-      var placeHolderLength = this.props.placeHolder.length
-      for(let i = 0; i < placeHolderLength; i++){
-        currentText.shift()
-      }
+      //console.log('currenttext-pre', currentText)
       
-
       //if key is alphanumeric or @ or .
-      if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){
-        currentValue = currentText.join('')
-        console.log('currentValue', currentValue)
-        currentValue = currentValue + key
-        this.props.onChange(this.props.name, currentValue)
+      if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){  
         this.setState({
-          text: this.state.changed? this.state.text + key : this.state.text + key,
+          text: this.state.changed? this.state.text + key : key,
           changed: true,
-          value: currentValue,
         }, ()=>{
+          this.props.onChange(this.props.name, this.state.text)
           //console.log(this.state.text)
-          //console.log('value', this.state.value)
         })
       }
+
+      //if delete key was pressed
       if(theKeyCode == 8){
-        if(currentText.length){
-          currentText.pop()
-        }
-        currentValue = currentText.join('')
-        console.log('currentValue', currentValue)
-        this.props.onChange(this.props.name, currentValue)
-        //console.log('tried to backspace')
+        var joinedText = currentText.join('')
+        console.log('joinedText', joinedText == this.props.placeHolder)
+        //delete letter from array
+        currentText.pop()
+        var joinedLess = currentText.join('')
+        console.log('joinedless', !!joinedLess)
+        //if currenttext is empty, show placeholder
         this.setState({
-          text: this.state.changed? backSpaceText : this.state.text,
-          changed: true,
-          value: currentValue
+          text: this.state.changed && joinedLess? joinedLess: this.props.placeHolder,
+          changed: joinedText !== this.props.placeHolder && joinedLess? true: false,
         }, ()=>{
-          //console.log(this.state.text)
-          //console.log('value', this.state.value)
+          console.log('delete-end-state', this.state)
+          this.props.onChange(this.props.name, this.state.text)
         })
       }
       
