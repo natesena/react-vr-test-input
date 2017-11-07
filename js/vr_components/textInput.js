@@ -15,7 +15,8 @@ import {
             color: '#FF0000',
             focused: props.focused,
             typed: false,
-            changed: false
+            changed: false,
+            value: ''
         }
     }
 
@@ -27,11 +28,19 @@ import {
         //console.log('placeholder clicked', this.state.focused)
       })
     }
+    fieldClick(){
+      console.log('clicked textInput')
+      // this.setState({
+      //   fontWeight: 200,
+      // }, ()=>{
+      //   console.log('fontWeight', this.state.fontWeight)
+      // })
+    }
     keyPressed(evt){
       
       //keycode of pressedKey
       var theKeyCode = evt.nativeEvent.inputEvent.keyCode
-      console.log('keycode', theKeyCode)
+      //console.log('keycode', theKeyCode)
 
       //actual key that was pressed. Could be non-alphanumeric
       var key = evt.nativeEvent.inputEvent.key
@@ -39,25 +48,32 @@ import {
       var copyArray = copyString.split('')
       copyArray.pop()
       var backSpaceText= copyArray.join('')
-      console.log('this.state.text', this.state.text)
-      console.log("this.state.text minus letter", backSpaceText)
+      if(backSpaceText.length <= this.props.placeHolder.length){
+        //console.log('deleted beyond prop', 'backSpaceText', backSpaceText)
+        backSpaceText = this.props.placeHolder
+      }
+      
+
+      //console.log('this.state.text', this.state.text)
+      //console.log("this.state.text minus letter", backSpaceText)
       
       //filter by key
-      if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90)){
+      if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){
         this.setState({
-          text: this.state.changed? this.state.text + key : this.state.text+ ": " + key,
-          changed: true
+          text: this.state.changed? this.state.text + key : this.state.text + key,
+          changed: true,
+          fontWeight: 400
         }, ()=>{
           console.log(this.state.text)
         })
       }
       if(theKeyCode == 8){
-        console.log('tried to backspace')
+        //console.log('tried to backspace')
         this.setState({
           text: this.state.changed? backSpaceText : this.state.text,
           changed: true
         }, ()=>{
-          console.log(this.state.text)
+          //console.log(this.state.text)
         })
       }
       
@@ -66,12 +82,13 @@ import {
     render() {
       return (
         <View onInput={(evt)=>{
+          //only register a typing event on keyup as to remove duplicates
           if(evt.nativeEvent.inputEvent.type == 'KeyboardInputEvent' && evt.nativeEvent.inputEvent.eventType == "keyup"){
-            console.log(evt.nativeEvent)
+            //console.log(evt.nativeEvent)
             this.keyPressed(evt)
           }
         }}>
-          <VrButton onEnter={this.focus.bind(this)} onExit={this.focus.bind(this)} >
+          <VrButton onEnter={this.focus.bind(this)} onExit={this.focus.bind(this)} onClick={this.fieldClick.bind(this)}>
             <Text 
               style={{
                 margin: 0.05,

@@ -21,10 +21,10 @@ export default class test_vr extends React.Component {
 
         <Pano source={asset('chess-world.jpg')}/>
         
-        <TextInput placeHolder={'name'} focused={false} ></TextInput>
-        <TextInput placeHolder={'email'} focused={false} ></TextInput>
-        <TextInput placeHolder={'password'} focused={false} ></TextInput>
-        <TextInput placeHolder={'confirm password'} focused={false} ></TextInput>
+        <TextInput placeHolder={'username: '} focused={false} type={'password'}></TextInput>
+        <TextInput placeHolder={'email: '} focused={false} type={'password'}></TextInput>
+        <TextInput placeHolder={'password: '} focused={false} type={'password'}></TextInput>
+        <TextInput placeHolder={'confirm password: '} focused={false} type={'password'}></TextInput>
         <VrButton onClick={this.clickity.bind(this)}>
           <Text
             style={{
