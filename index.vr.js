@@ -7,18 +7,17 @@ import {
   View,
   VrButton,
 } from 'react-vr';
-import { MemoryRouter } from 'react-router'
+import { MemoryRouter as Router } from 'react-router'
 import App from './Views/App.js'
 
-
-
+console.log(Router)
 
 export default class test_vr extends React.Component {
  render(){
    return(
-     <MemoryRouter >
+     <Router>
       <App/>
-     </MemoryRouter>
+    </Router>
    )
  }
 };
