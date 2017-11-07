@@ -63,12 +63,14 @@ import {
       for(let i = 0; i < placeHolderLength; i++){
         currentText.shift()
       }
-      currentValue = currentText.join('')
-      console.log('currentValue', currentValue)
+      
 
       //filter by key
       if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){
+        currentValue = currentText.join('')
+        console.log('currentValue', currentValue)
         currentValue = currentValue + key
+        this.props.onChange(this.props.name, currentValue)
         this.setState({
           text: this.state.changed? this.state.text + key : this.state.text + key,
           changed: true,
@@ -76,13 +78,15 @@ import {
           value: currentValue,
         }, ()=>{
           //console.log(this.state.text)
-          console.log('value', this.state.value)
+          //console.log('value', this.state.value)
         })
       }
       if(theKeyCode == 8){
         if(currentValue.length){
           currentValue.pop()
         }
+        currentValue = currentText.join('')
+        console.log('currentValue', currentValue)
         //console.log('tried to backspace')
         this.setState({
           text: this.state.changed? backSpaceText : this.state.text,
@@ -90,7 +94,7 @@ import {
           value: currentValue
         }, ()=>{
           //console.log(this.state.text)
-          console.log('value', this.state.value)
+          //console.log('value', this.state.value)
         })
       }
       
@@ -119,7 +123,7 @@ import {
                 textAlignVertical: 'center',
                 transform: [{translate: [0, 0, -3]}],
               }}>
-              {this.state.text}
+              {this.props.value}
             </Text>
           </VrButton>
         </View>
