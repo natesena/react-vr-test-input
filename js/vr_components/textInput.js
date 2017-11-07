@@ -11,12 +11,9 @@ import {
         super(props)
         this.state ={
             text: props.placeHolder,
-            fontWeight: 400,
             color: '#FF0000',
             focused: props.focused,
-            typed: false,
             changed: false,
-            value: ''
         }
     }
 
@@ -30,20 +27,18 @@ import {
     }
     fieldClick(){
       console.log('clicked textInput')
-      // this.setState({
-      //   fontWeight: 200,
-      // }, ()=>{
-      //   console.log('fontWeight', this.state.fontWeight)
-      // })
     }
     keyPressed(evt){
-      
       //keycode of pressedKey
       var theKeyCode = evt.nativeEvent.inputEvent.keyCode
-      //console.log('keycode', theKeyCode)
+        //console.log('keycode', theKeyCode)
 
       //actual key that was pressed. Could be non-alphanumeric
       var key = evt.nativeEvent.inputEvent.key
+
+      //-----Backspace Handler------
+      //store current text value
+      //if inputfield is not !changed, this is simply the placeholder
       var copyString = this.state.text
       var copyArray = copyString.split('')
       copyArray.pop()
@@ -52,10 +47,8 @@ import {
         //console.log('deleted beyond prop', 'backSpaceText', backSpaceText)
         backSpaceText = this.props.placeHolder
       }
-    
-      //console.log('this.state.text', this.state.text)
-      //console.log("this.state.text minus letter", backSpaceText)
-
+      
+      //------Finding Current Text - placeholder --------------
       //need to subtract placeholder from 
       var currentValue
       var currentText = this.state.text.split('')
@@ -65,7 +58,7 @@ import {
       }
       
 
-      //filter by key
+      //if key is alphanumeric or @ or .
       if((theKeyCode >= 48 && theKeyCode <= 57)||(theKeyCode >= 65 && theKeyCode <= 90||theKeyCode == 190)){
         currentValue = currentText.join('')
         console.log('currentValue', currentValue)
@@ -74,7 +67,6 @@ import {
         this.setState({
           text: this.state.changed? this.state.text + key : this.state.text + key,
           changed: true,
-          fontWeight: 400,
           value: currentValue,
         }, ()=>{
           //console.log(this.state.text)
@@ -82,11 +74,12 @@ import {
         })
       }
       if(theKeyCode == 8){
-        if(currentValue.length){
-          currentValue.pop()
+        if(currentText.length){
+          currentText.pop()
         }
         currentValue = currentText.join('')
         console.log('currentValue', currentValue)
+        this.props.onChange(this.props.name, currentValue)
         //console.log('tried to backspace')
         this.setState({
           text: this.state.changed? backSpaceText : this.state.text,
@@ -115,7 +108,7 @@ import {
                 margin: 0.05,
                 backgroundColor: `${this.state.color}`,
                 fontSize: 0.2,
-                fontWeight: `${this.state.fontWeight}`,
+                fontWeight: "400",
                 layoutOrigin: [0.5, 0.5],
                 paddingLeft: 0.2,
                 paddingRight: 0.2,

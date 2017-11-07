@@ -12,7 +12,10 @@ import TextInput from './js/vr_components/textInput.js'
 export default class test_vr extends React.Component {
   state = {
     fields: {
-      username: 'barf'
+      username: 'username: ',
+      email: 'email: ',
+      password: 'password: ',
+      confirmPassword: 'confirm password: '
     }
   }
   clickity(){
@@ -38,10 +41,10 @@ export default class test_vr extends React.Component {
 
         <Pano source={asset('chess-world.jpg')}/>
         
-        <TextInput name="username" onChange={this.onInputChange.bind(this)} value={this.state.fields.username} placeHolder={'username: '} focused={false} type={'password'} ></TextInput>
-        {/* <TextInput placeHolder={'email: '} focused={false} type={'password'}></TextInput>
-        <TextInput placeHolder={'password: '} focused={false} type={'password'}></TextInput>
-        <TextInput placeHolder={'confirm password: '} focused={false} type={'password'}></TextInput> */}
+        <TextInput name="username" onChange={this.onInputChange.bind(this)} value={this.state.fields.username} placeHolder={'username: '} focused={false} type={'text'} ></TextInput>
+        <TextInput name="email" onChange={this.onInputChange.bind(this)} value={this.state.fields.email} placeHolder={'username: '} focused={false} type={'email'} ></TextInput>
+        <TextInput name="password" onChange={this.onInputChange.bind(this)} value={this.state.fields.password} placeHolder={'username: '} focused={false} type={'password'} ></TextInput>
+        <TextInput name="confirmPassword" onChange={this.onInputChange.bind(this)} value={this.state.fields.confirmPassword} placeHolder={'username: '} focused={false} type={'password'} ></TextInput>
         <VrButton onClick={this.clickity.bind(this)}>
           <Text
             style={{
