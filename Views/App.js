@@ -7,13 +7,34 @@ import {
   View,
   VrButton,
 } from 'react-vr';
-import { MemoryRouter, Redirect, Route, Switch } from 'react-router'
 import Login from './login.js'
+import Test from './test.js'
 
 export default class App extends React.Component {
-    render(){
+  state={
+    history: [],
+    user: null,
+    view: 'login'
+  }
+  changeView(link){
+    //console.log(link)
+    this.setState({
+      ...this.state,
+      view: link,
+      //history
+    })
+  }
+  render(){
+    console.log(this.state)
+   if(this.state.view == 'login'){
+     return(
+      <Login changeView={this.changeView.bind(this)}/>
+     )
+   }
+   else if(this.state.view == 'test'){
       return(
-        <Login/>
+      <Test/>
       )
     }
+  }
    };
